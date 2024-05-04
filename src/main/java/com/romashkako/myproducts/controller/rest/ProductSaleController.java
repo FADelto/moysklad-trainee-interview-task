@@ -2,7 +2,7 @@ package com.romashkako.myproducts.controller.rest;
 
 import com.romashkako.myproducts.database.dto.ErrorResponseDTO;
 import com.romashkako.myproducts.database.dto.ProductSaleDTO;
-import com.romashkako.myproducts.database.entity.ProductSupply;
+import com.romashkako.myproducts.database.entity.ProductSale;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,7 +20,7 @@ public interface ProductSaleController {
             summary = "Создать продажу"
     )
     @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSupply.class))
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSale.class))
     })
     @ApiResponse(responseCode = "404", description = "Продажа товара с таким id не найдена | Неверный id продукта", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
@@ -35,7 +35,7 @@ public interface ProductSaleController {
             summary = "Получить все продажи"
     )
     @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProductSupply.class)))
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProductSale.class)))
     })
     @GetMapping("/getall")
     ResponseEntity<?> getAll();
@@ -44,7 +44,7 @@ public interface ProductSaleController {
             summary = "Получить информацию о продаже по id"
     )
     @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSupply.class))
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSale.class))
     })
     @GetMapping("/getById")
     ResponseEntity<?> getById(Long id);
@@ -53,7 +53,7 @@ public interface ProductSaleController {
             summary = "Обновить информацию о продаже"
     )
     @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSupply.class))
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSale.class))
     })
     @ApiResponse(responseCode = "404", description = "Продажа товара с таким id не найдена | Неверный id продукта", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
@@ -68,7 +68,7 @@ public interface ProductSaleController {
             summary = "Удалить продажу по id"
     )
     @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSupply.class))
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductSale.class))
     })
     @ApiResponse(responseCode = "404", description = "Продажа товара с таким id не найдена | Неверный id продукта", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
