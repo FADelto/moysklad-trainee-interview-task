@@ -17,6 +17,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name", nullable = false)
     @Schema(description = "Название продукта. Максимальная длина 255 символов", maxLength = 255, example = "Чайник", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name = "";
@@ -30,15 +31,16 @@ public class Product {
     @Schema(description = "Цена продукта. Цена продукта не может быть отрицательной", defaultValue = "0.0", example = "1499.99")
     private Double price = 0.0;
 
-    @Column(name = "inStock")
+    @Column(name = "in_stock")
     @Schema(description = "Доступность продукта на складе", defaultValue = "false")
     private Boolean inStock = false;
 
-    public Product(String name, String description, Double price, Boolean inStock) {
+    @Schema(description = "Количество продукта на складе", defaultValue = "0")
+    private Integer quantityOfProducts=0;
+    public Product(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.inStock = inStock;
     }
     //    public Product(String name, String description, Double price, Boolean inStock){
 //        super(name, description, price, inStock);

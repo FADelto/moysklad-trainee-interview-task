@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-//Спорная реализация
+//Реализация мне показалась странной
 public abstract class BaseProduct {
     @Column(name = "name", nullable = false)
     @Schema(description = "Название продукта. Максимальная длина 255 символов", maxLength = 255, example = "Чайник", requiredMode = Schema.RequiredMode.REQUIRED)

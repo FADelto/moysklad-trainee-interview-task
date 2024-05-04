@@ -20,7 +20,7 @@ public class ProductControllerImpl implements ProductController {
     private final ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Validated @RequestBody ProductDTO product) {
+    public ResponseEntity<?> create(@RequestBody ProductDTO product) {
         try {
             return new ResponseEntity<>(productService.createProduct(product), HttpStatus.OK);
         }

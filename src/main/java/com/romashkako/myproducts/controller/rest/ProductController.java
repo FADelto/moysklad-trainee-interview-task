@@ -81,11 +81,10 @@ public interface ProductController {
     })
     @GetMapping("/filter")
     ResponseEntity<?> filter(@Parameter(description = "Поиск по имени продукта") @RequestParam(required = false) String name,
-                             @Parameter(description = "Минимальная цена продукта") @RequestParam(required = false) Double minPrice,
-                             @Parameter(description = "Максимальная цена продукта") @RequestParam(required = false) Double maxPrice,
-                             @Parameter(description = "Поиск по наличию продукта") @RequestParam(required = false) Boolean inStock,
-                             @Parameter(description = "Сортировка продукта по имени(name) или цене(price)") @RequestParam(required = false) String orderSelect,
-                             @Parameter(description = "Выбор направления сортировки по возрастанию(true) или по убыванию(false)") @RequestParam(required = false) Boolean orderDirectionAsc,
-                             @Parameter(description = "Лимит выборки записей") @RequestParam(required = false) Integer limit);
-
+                                    @Parameter(description = "Минимальная цена продукта") @RequestParam(required = false) Double minPrice,
+                                    @Parameter(description = "Максимальная цена продукта") @RequestParam(required = false) Double maxPrice,
+                                    @Parameter(description = "Поиск по наличию продукта") @RequestParam(required = false) Boolean inStock,
+                                    @Parameter(description = "Сортировка продукта по имени(name) или цене(price)") @RequestParam(required = false) String orderSelect,
+                                    @Parameter(description = "Выбор направления сортировки по возрастанию(true) или по убыванию(false)") @RequestParam(required = false) Boolean orderDirectionAsc,
+                                    @Parameter(description = "Лимит выборки записей") @RequestParam(required = false) Integer limit);
 }
