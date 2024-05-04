@@ -1,6 +1,7 @@
 package com.romashkako.myproducts.controller.rest;
 
 import com.romashkako.myproducts.database.dto.ErrorResponseDTO;
+import com.romashkako.myproducts.database.dto.ProductDTO;
 import com.romashkako.myproducts.database.entity.Product;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 @Tag(name="Контроллер продуктов")
 public interface ProductsInterface {
     @Operation(
@@ -23,7 +25,7 @@ public interface ProductsInterface {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
     })
     @PostMapping("/create")
-    ResponseEntity<?> create(@Validated @RequestBody Product product);
+    ResponseEntity<?> create(@Validated @RequestBody ProductDTO product);
 
     @Operation(
             summary = "Получить все продукты"
@@ -41,16 +43,8 @@ public interface ProductsInterface {
             @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
     })
     @GetMapping("/getById")
-    ResponseEntity<?> getById(int id);
+    ResponseEntity<?> getById(Long id);
 
-    @Operation(
-            summary = "Получить продукт по имени"
-    )
-    @ApiResponse(responseCode = "200", description = "OK", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-    })
-    @GetMapping("/getByName")
-    ResponseEntity<?> getByName(String name);
 
     @Operation(
             summary = "Обновить продукт"
@@ -65,7 +59,7 @@ public interface ProductsInterface {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
     })
     @PatchMapping("/update")
-    ResponseEntity<?> update(@Validated @RequestBody Product product, @RequestParam int id);
+    ResponseEntity<?> update(@Validated @RequestBody ProductDTO product, @RequestParam Long id);
 
     @Operation(
             summary = "Удалить продукт по id"
@@ -77,5 +71,5 @@ public interface ProductsInterface {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))
     })
     @DeleteMapping("/remove")
-    ResponseEntity<?> remove(int id);
+    ResponseEntity<?> remove(Long id);
 }

@@ -1,13 +1,15 @@
 package com.romashkako.myproducts.controller.rest;
 
 import com.romashkako.myproducts.database.dto.ErrorResponseDTO;
-import com.romashkako.myproducts.database.entity.Product;
+import com.romashkako.myproducts.database.dto.ProductDTO;
 import com.romashkako.myproducts.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -18,7 +20,7 @@ public class ProductsController implements ProductsInterface {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Validated @RequestBody Product product) {
+    public ResponseEntity<?> create(@Validated @RequestBody ProductDTO product) {
         try {
             return new ResponseEntity<>(productService.createProduct(product), HttpStatus.OK);
         }
@@ -34,29 +36,24 @@ public class ProductsController implements ProductsInterface {
 
 
     @GetMapping("/getById")
-    public ResponseEntity<?> getById(int id){
+    public ResponseEntity<?> getById(Long id){
         try {
             return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
         }
-        catch(IndexOutOfBoundsException e){
-            return ResponseEntity.status(404).body(new ErrorResponseDTO("Неверный id продукта"));
+        catch(NoSuchElementException e){
+            return ResponseEntity.status(404).body(new ErrorResponseDTO(e.getMessage()));
         }
 
-    }
-
-    @GetMapping("/getByName")
-    public ResponseEntity<?> getByName(String name) {
-        return new ResponseEntity<>(productService.getProductByName(name), HttpStatus.OK);
     }
 
 
     @PatchMapping("/update")
-    public ResponseEntity<?> update(@Validated @RequestBody Product product, @RequestParam int id) {
+    public ResponseEntity<?> update(@Validated @RequestBody ProductDTO product, @RequestParam Long id) {
         try {
             return ResponseEntity.ok().body(productService.editProduct(product, id));
         }
-        catch(IndexOutOfBoundsException e){
-            return ResponseEntity.status(404).body(new ErrorResponseDTO("Неверный id продукта"));
+        catch(NoSuchElementException e){
+            return ResponseEntity.status(404).body(new ErrorResponseDTO(e.getMessage()));
         }
         catch (RuntimeException e){
             return ResponseEntity.status(412).body(new ErrorResponseDTO(e.getMessage()));
@@ -64,12 +61,12 @@ public class ProductsController implements ProductsInterface {
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<?> remove(int id) {
+    public ResponseEntity<?> remove(Long id) {
         try {
             return new ResponseEntity<>(productService.removeProduct(id), HttpStatus.OK);
         }
-        catch(IndexOutOfBoundsException e){
-            return ResponseEntity.status(404).body(new ErrorResponseDTO("Неверный id продукта"));
+        catch(NoSuchElementException e){
+            return ResponseEntity.status(404).body(new ErrorResponseDTO(e.getMessage()));
         }
     }
 }

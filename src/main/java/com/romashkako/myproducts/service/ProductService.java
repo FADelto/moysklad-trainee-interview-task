@@ -1,20 +1,21 @@
 package com.romashkako.myproducts.service;
 
+import com.romashkako.myproducts.database.dto.ProductDTO;
 import com.romashkako.myproducts.database.entity.Product;
+import com.romashkako.myproducts.database.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    private List<Product> productList;
+    private final ProductRepository productRepository;
 
-    public ProductService(List<Product> productList) {
-        this.productList = productList;
-    }
 
-    private void checkRestrictions(Product product) {
+    private void checkRestrictions(ProductDTO product) {
         if(!product.getName().isEmpty() && product.getName().length() < 256){
             if(product.getDescription().length()<4097){
                 if (product.getPrice() < 0) {
@@ -26,28 +27,31 @@ public class ProductService {
         else throw new RuntimeException("Название товара не соответствует требованиям");
     }
 
-    public Product createProduct(Product product){
+    public ProductDTO createProduct(ProductDTO product){
         checkRestrictions(product);
-        productList.add(product);
+        productRepository.save(new Product(product.getName(), product.getDescription(), product.getPrice(), product.getInStock()));
         return product;
     }
     public List<Product> getAllProducts(){
-        return productList;
+        return productRepository.findAll();
     }
-    public List<Product> getProductByName(String name){
-        return productList.stream().filter(product -> product.getName().equals(name)).collect(Collectors.toList());
+    public Product getProductById(Long id){
+        return productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Продукт с таким id не найден"));
     }
-    public Product getProductById(int id){
-        return productList.get(id);
-    }
-    public Product editProduct(Product product, int id){
+    public Product editProduct(ProductDTO product, Long id){
         checkRestrictions(product);
-        productList.set(id, product);
-        return product;
+        Product oldProduct  = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Продукт с таким id не найден"));
+        oldProduct.setName(product.getName());
+        oldProduct.setDescription(product.getDescription());
+        oldProduct.setPrice(product.getPrice());
+        oldProduct.setInStock(product.getInStock());
+        return productRepository.save(oldProduct);
     }
 
-    public Product removeProduct(int id){
-        return productList.remove(id);
+    public Product removeProduct(Long id){
+        Product removedProduct  = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Продукт с таким id не найден"));
+        productRepository.deleteById(id);
+        return removedProduct;
     }
 
 }
