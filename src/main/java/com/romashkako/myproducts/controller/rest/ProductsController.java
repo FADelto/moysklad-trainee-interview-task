@@ -50,7 +50,7 @@ public class ProductsController implements ProductsInterface {
     @PatchMapping("/update")
     public ResponseEntity<?> update(@Validated @RequestBody ProductDTO product, @RequestParam Long id) {
         try {
-            return ResponseEntity.ok().body(productService.editProduct(product, id));
+            productService.editProduct(product, id);
         }
         catch(NoSuchElementException e){
             return ResponseEntity.status(404).body(new ErrorResponseDTO(e.getMessage()));
@@ -58,6 +58,7 @@ public class ProductsController implements ProductsInterface {
         catch (RuntimeException e){
             return ResponseEntity.status(412).body(new ErrorResponseDTO(e.getMessage()));
         }
+        return ResponseEntity.ok().body(product);
     }
 
     @DeleteMapping("/remove")
