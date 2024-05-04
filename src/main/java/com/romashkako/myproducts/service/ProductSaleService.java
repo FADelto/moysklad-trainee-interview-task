@@ -55,9 +55,9 @@ public class ProductSaleService {
             product = productService.changeInStock(productSale.getProductId(), -productSale.getQuantityOfSoldProducts());
         } else {
             if (productSale.getQuantityOfSoldProducts() < oldProductSale.getQuantityOfSoldProducts()) {
-                product = productService.changeInStock(productSale.getProductId(), productSale.getQuantityOfSoldProducts());
+                product = productService.changeInStock(productSale.getProductId(), oldProductSale.getQuantityOfSoldProducts() - productSale.getQuantityOfSoldProducts());
             } else {
-                product = productService.changeInStock(productSale.getProductId(), -productSale.getQuantityOfSoldProducts());
+                product = productService.changeInStock(productSale.getProductId(), -productSale.getQuantityOfSoldProducts() + oldProductSale.getQuantityOfSoldProducts());
             }
         }
         oldProductSale.setDocumentName(productSale.getDocumentName());
