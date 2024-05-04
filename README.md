@@ -1,6 +1,8 @@
 # Тестовое задание
 #### Также документация есть по адресу: `localhost:8080/swagger-ui/index.html`
-[Само задание](https://github.com/moysklad/trainee-interview-task) 
+[Само задание](https://github.com/moysklad/trainee-interview-task)
+
+Выполнено всё кроме JUnit тестов
 ## Документация API
 
 **Стандартный путь для api:**  `/api/v1`
