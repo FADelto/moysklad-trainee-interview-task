@@ -13,9 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
+//Спорная реализация
 public abstract class BaseProduct {
     @Column(name = "name", nullable = false)
-    @Schema(description = "Имя продукта. Максимальная длина 255 символов", maxLength = 255, example = "Чайник", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Название продукта. Максимальная длина 255 символов", maxLength = 255, example = "Чайник", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name = "";
 
     @Column(name = "description", length = 4096)
@@ -27,7 +28,7 @@ public abstract class BaseProduct {
     @Schema(description = "Цена продукта. Цена продукта не может быть отрицательной", defaultValue = "0.0", example = "1499.99")
     private Double price = 0.0;
 
-    @Column(name = "in_stock")
+    @Column(name = "inStock")
     @Schema(description = "Доступность продукта на складе", defaultValue = "false")
     private Boolean inStock = false;
 
